@@ -1,6 +1,13 @@
 package com.demos.demo;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import com.demos.demo.comments.dao.impl.CommentDaoImpl;
+import com.demos.demo.comments.model.Comment;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,13 +21,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
-
-import com.demos.demo.comments.dao.impl.CommentDaoImpl;
-import com.demos.demo.comments.model.Comment;
-import com.demos.demo.comments.model.Data;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import reactor.core.publisher.Flux;
 
@@ -36,9 +36,7 @@ public class CommentDaoTest {
 	WebClient webClientMock;
 	
 	@Test
-	public void shouldReturnTestWhenCase() throws JsonParseException, JsonMappingException, IOException {
-		Data data = JSON_MAPPER.readValue(new File("src/main/resources/mijson.json"), Data.class);
-		
+	public void shouldReturnOk() throws JsonParseException, JsonMappingException, IOException {
 		ArrayList<Comment> myComments = JSON_MAPPER.readValue(new File("src/main/resources/webservice.json"), 
 				JSON_MAPPER.getTypeFactory().constructCollectionType(ArrayList.class, Comment.class));
 		
@@ -51,6 +49,8 @@ public class CommentDaoTest {
         .thenReturn(Flux.fromIterable(myComments));
 		
 		assertNotNull(dao.searchComments());
+		assertEquals(myComments.get(0).getId(), dao.searchComments().blockFirst().getId());
 	}
+	
 	
 }

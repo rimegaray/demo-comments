@@ -24,10 +24,6 @@ public class Comment {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
-	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -38,10 +34,6 @@ public class Comment {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public String getBody() {
-		return body;
 	}
 
 	public void setBody(String body) {

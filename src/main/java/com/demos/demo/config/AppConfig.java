@@ -15,4 +15,5 @@ public class AppConfig {
 	public WebClient registrarWebClient() {
 		return WebClient.create(url);
 	}
+
 }

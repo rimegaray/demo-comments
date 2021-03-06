@@ -11,6 +11,10 @@ public class ErrorInfo {
 		this.statusCode = statusCode;
 	}
 
+	public String getCode() {
+		return code;
+	}
+
 	public String getMessage() {
 		return message;
 	}
@@ -18,10 +22,5 @@ public class ErrorInfo {
 	public int getStatusCode() {
 		return statusCode;
 	}
-
-	public String getCode() {
-		return code;
-	}
-
 
 }

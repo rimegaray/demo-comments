@@ -2,7 +2,6 @@ package com.demos.demo.comments.business.impl;
 
 import com.demos.demo.comments.business.ICommentService;
 import com.demos.demo.comments.dao.ICommentDao;
-import com.demos.demo.comments.exception.ApiException;
 import com.demos.demo.comments.model.Data;
 import com.demos.demo.comments.utils.Utils;
 
@@ -24,8 +23,7 @@ public class CommentServiceImpl implements ICommentService {
     return dao.searchComments()
         .map(comment -> Utils.transformData(comment))
         .collect(Collectors.toList())
-        .map(data ->  new Data(data))
-        .onErrorResume(th -> Mono.error(ApiException.builderException(th)));
+        .map(data ->  new Data(data));
   }
 
 }

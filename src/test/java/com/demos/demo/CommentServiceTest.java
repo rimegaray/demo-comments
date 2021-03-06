@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import reactor.core.publisher.Flux;
+import reactor.test.StepVerifier;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CommentServiceTest {
@@ -35,7 +36,7 @@ public class CommentServiceTest {
 	CommentDaoImpl daoMock;
 	
 	@Test
-	public void shouldReturnTestWhenCase() throws JsonParseException, JsonMappingException, IOException {
+	public void shouldReturnOk() throws JsonParseException, JsonMappingException, IOException {
 		Data data = JSON_MAPPER.readValue(new File("src/main/resources/mijson.json"), Data.class);
 		
 		ArrayList<Comment> myComments = JSON_MAPPER.readValue(new File("src/main/resources/webservice.json"), 
@@ -47,6 +48,10 @@ public class CommentServiceTest {
 		assertEquals(data.getData().get(1), service.searchComments().block().getData().get(1));
 		assertEquals(data.getData().get(2), service.searchComments().block().getData().get(2));
 		
+		StepVerifier.create(service.searchComments())
+	    .expectNextCount(1)
+	    .expectComplete()
+	    .verify();
 	}
 	
 }
