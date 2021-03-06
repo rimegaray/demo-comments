@@ -14,6 +14,10 @@ public class Data implements Serializable {
 		this.data = data;
 	}
 
+	public Data() {
+		super();
+	}
+
 	public List<String> getData() {
 		return data;
 	}
